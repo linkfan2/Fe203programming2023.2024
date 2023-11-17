@@ -87,9 +87,14 @@ public class GameTeleop extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+
+        linearSlide.setPower(0.25);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
+            telemetry.addData("encoder-fwd-left", linearSlide.getCurrentPosition()+ " busy=" + linearSlide.isBusy());
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed //power level for telemetry
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing //
             double rx = gamepad1.right_stick_x;
