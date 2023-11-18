@@ -61,9 +61,6 @@ public class GameTeleop extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -73,6 +70,10 @@ public class GameTeleop extends LinearOpMode {
         rightRearDrive = hardwareMap.get(DcMotor.class, "right_rear_drive");// To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
 
         linearSlide = hardwareMap.get(DcMotor.class, "linear_slide" );
+
+        linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        int position = linearSlide.getCurrentPosition();
 
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
