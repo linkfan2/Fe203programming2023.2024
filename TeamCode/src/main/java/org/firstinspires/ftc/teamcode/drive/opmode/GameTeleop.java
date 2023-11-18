@@ -71,8 +71,6 @@ public class GameTeleop extends LinearOpMode {
 
         linearSlide = hardwareMap.get(DcMotor.class, "linear_slide" );
 
-     //   linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      //  int position = linearSlide.getCurrentPosition();
 
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -94,7 +92,8 @@ public class GameTeleop extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing //
             double rx = gamepad1.right_stick_x;
 
-            double slide = gamepad2.left_stick_y;
+            double slide = gamepad1.right_trigger;
+            double lowerslide = gamepad1.left_trigger;
 
             // Denominator is the largest motor power (absolute value) or 1 // Mode
             // This ensures all the powers maintain the same ratio, // default below is POV.
@@ -105,7 +104,8 @@ public class GameTeleop extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator; //
             double backRightPower = (y + x - rx) / denominator; //) ;
 
-            double slidePower = (slide * 1); //change speed multiplier after testing
+            double slidePower = (slide - lowerslide); //change speed multiplier after testing
+
 
             leftFrontDrive.setPower(frontLeftPower); //
             leftRearDrive.setPower(backLeftPower); //.
