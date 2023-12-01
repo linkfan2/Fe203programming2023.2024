@@ -4,8 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.drive.opmode.GameTeleop;
+
 @TeleOp (name="slideOpmode", group="linearOpmode")
-public class slideOpmode extends LinearOpMode {
+public class slideOpmode extends GameTeleop {
     @Override
     public void runOpMode() throws InterruptedException {
         // Position of the arm when it's lifted
