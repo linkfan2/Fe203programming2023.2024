@@ -42,6 +42,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.teamcode.drive.opmode.subsystems.slideOpmode;
 
 @TeleOp(name="Game Opmode", group="Linear Opmode")
 //@Disabled
@@ -56,11 +57,11 @@ public class GameTeleop extends LinearOpMode {
     private DcMotor rightRearDrive = null;
 
 
-    private DcMotor linearSlide = null; //slide motor
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
+
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -69,12 +70,6 @@ public class GameTeleop extends LinearOpMode {
         leftRearDrive = hardwareMap.get(DcMotor.class, "left_rear_drive");
         rightRearDrive = hardwareMap.get(DcMotor.class, "right_rear_drive");// To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
 
-        linearSlide = hardwareMap.get(DcMotor.class, "linear_slide" );
-
-        linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        int position = linearSlide.getCurrentPosition();
-
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -82,7 +77,7 @@ public class GameTeleop extends LinearOpMode {
         leftRearDrive.setDirection(DcMotor.Direction.FORWARD);
         rightRearDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        linearSlide.setDirection(DcMotor.Direction.FORWARD); //Linear slide, possibly change after test
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -100,8 +95,8 @@ public class GameTeleop extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing //
             double rx = gamepad1.right_stick_x;
 
-            double slide = gamepad2.left_stick_y;
-
+            double slide = gamepad1.right_trigger;
+            double lowerslide = gamepad1.left_trigger;
 
             // Denominator is the largest motor power (absolute value) or 1 // Mode
             // This ensures all the powers maintain the same ratio, // default below is POV.
@@ -112,14 +107,13 @@ public class GameTeleop extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator; //
             double backRightPower = (y + x - rx) / denominator; //) ;
 
-            double slidePower = (slide * 1); //change speed multiplier after testing
+            double slidePower = (slide - lowerslide); //change speed multiplier after testing
 
             leftFrontDrive.setPower(frontLeftPower); //
             leftRearDrive.setPower(backLeftPower); //.
             rightFrontDrive.setPower(frontRightPower); //drive forward slowly and keep straight.
             rightRearDrive.setPower(backRightPower); //
 
-            linearSlide.setPower(slidePower); //subject to future revision after testing
 
             //e.toString());
             //%.2f)", leftPower, rightPower);
