@@ -59,8 +59,8 @@ public class GameTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-                // Initialize the hardware variables. Note that the strings used here as parameters
-                // to 'get' must correspond to the names assigned during the robot configuration
+            // Initialize the hardware variables. Note that the strings used here as parameters
+            // to 'get' must correspond to the names assigned during the robot configuration
             // step (using the FTC Robot Controller app on the phone).
             rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
             leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
