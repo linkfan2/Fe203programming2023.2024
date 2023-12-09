@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @Autonomous(group = "drive")
 public class pixelOpmode extends LinearOpMode {
 
-    public static double DISTANCE = 50;
+    public static double DISTANCE = 10;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,15 +38,15 @@ public class pixelOpmode extends LinearOpMode {
                 .forward(DISTANCE)
                 .build();
 
-        Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryForward.end())
-                .strafeRight(DISTANCE)
-                .build();
+      //  Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryForward.end())
+                //.strafeRight(DISTANCE)
+                //.build();
 
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
             drive.followTrajectory(trajectoryForward);
-            drive.followTrajectory(trajectoryBackward);
+           // drive.followTrajectory(trajectoryBackward);
         }
     }
 }

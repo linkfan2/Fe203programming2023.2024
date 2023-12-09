@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.drive.opmode.GameTeleop;
 
 @TeleOp (name="slideOpmode", group="linearOpmode")
-public class slideOpmode extends GameTeleop {
+public class slideOpmode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Position of the arm when it's lifted
