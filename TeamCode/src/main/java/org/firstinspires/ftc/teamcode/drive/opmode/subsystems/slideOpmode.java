@@ -30,18 +30,20 @@ public class slideOpmode extends LinearOpMode {
 
         while (opModeIsActive()) {
             // If the A button is pressed, raise the arm
-            if (gamepad1.right_bumper) {
+            if (gamepad1.a) {
                 slideMotor.setTargetPosition(slideUpPosition);
                 slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 slideMotor.setPower(0.5);
             }
 
             // If the B button is pressed, lower the arm
-            if (gamepad1.left_bumper) {
+            if (gamepad1.b) {
                 slideMotor.setTargetPosition(slideDownPosition);
                 slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 slideMotor.setPower(0.5);
             }
+
+            //note set stick value controls
 
             // Get the current position of the armMotor
             double position = slideMotor.getCurrentPosition();

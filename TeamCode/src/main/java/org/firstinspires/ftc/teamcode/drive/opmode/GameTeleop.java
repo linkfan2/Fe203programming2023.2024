@@ -36,6 +36,7 @@
 
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -74,6 +75,22 @@ public class GameTeleop extends LinearOpMode {
             leftRearDrive.setDirection(DcMotor.Direction.FORWARD);
             rightRearDrive.setDirection(DcMotor.Direction.REVERSE);
 
+            //Slide code
+            int slideUpPosition = 1000;
+
+            // Position of the arm when it's down
+            int slideDownPosition = 0;
+
+            // Find a motor in the hardware map named "Arm Motor"
+            DcMotor slideMotor = hardwareMap.dcMotor.get("linear_slide");
+
+            // Reset the motor encoder so that it reads zero ticks
+            slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            // Sets the starting position of the arm to the down position
+            slideMotor.setTargetPosition(slideDownPosition);
+            slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             // Wait for the game to start (driver presses PLAY)
             waitForStart();
             runtime.reset();
@@ -98,12 +115,37 @@ public class GameTeleop extends LinearOpMode {
                 double frontRightPower = (y - x - rx) / denominator; //
                 double backRightPower = (y + x - rx) / denominator; //) ;
 
-
                 leftFrontDrive.setPower(frontLeftPower); //
                 leftRearDrive.setPower(backLeftPower); //.
                 rightFrontDrive.setPower(frontRightPower); //drive forward slowly and keep straight.
                 rightRearDrive.setPower(backRightPower); //
 
+                if (gamepad1.right_bumper) {
+                    slideMotor.setTargetPosition(slideUpPosition);
+                    slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideMotor.setPower(0.7);
+                }
+
+                // If the B button is pressed, lower the arm
+                if (gamepad1.left_bumper) {
+                    slideMotor.setTargetPosition(slideDownPosition);
+                    slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideMotor.setPower(0.7);
+                }
+
+                // Get the current position of the armMotor
+                double position = slideMotor.getCurrentPosition();
+
+                // Get the target position of the armMotor
+                double desiredPosition = slideMotor.getTargetPosition();
+
+                // Show the position of the armMotor on telemetry
+                telemetry.addData("Encoder Position", position);
+
+                // Show the target position of the armMotor on telemetry
+                telemetry.addData("Desired Position", desiredPosition);
+
+                telemetry.update();
 
                 //e.toString());
                 //%.2f)", leftPower, rightPower);
